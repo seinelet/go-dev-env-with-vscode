@@ -1,0 +1,38 @@
+version: '3'
+services:
+  # [Choice] Uncomment the next line to using mariadb
+  # db:
+  #   image: mariadb:10.4
+  #   volumes:
+  #     - ./db_data:/var/lib/mysql
+  #   ports:
+  #     - "13306:3306"
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=example
+  #     - MYSQL_DATABASE=example
+  #     - MYSQL_USER=example
+  #     - MYSQL_PASSWORD=example
+  #     - TZ="Asia/Tokyo"
+  #   command:
+  #     - mysqld
+  #     - --character-set-server=utf8mb4
+  #     - --collation-server=utf8mb4_unicode_ci
+  app:
+    build: .
+    # [Choice] Uncomment the next line to using mariadb
+    # depends_on:
+    #   - "db"
+    # [Choice] Uncomment the next line to using mariadb
+    # command: ["./.devcontainer/wait-for-it.sh", "db:3306", "--", "sleep", "infinity"]
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - ~/.gitconfig:/home/vscode/.gitconfig
+      - ../:/workspace:cached
+      - ../.git:/workspace/.git
+
+# [Choice] Uncomment the next line to using mariadb
+# volumes:
+#   db_data:
